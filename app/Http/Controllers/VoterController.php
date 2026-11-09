@@ -9,74 +9,114 @@ use Illuminate\Support\Facades\Hash;
 class VoterController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan seluruh data pemilih.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->query('search');
+
+        $voters = User::where('role', 'voter')
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('nisn', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        $totalVoters = User::where('role', 'voter')->count();
+
+        return view('admin.voters.index', compact(
+            'voters',
+            'totalVoters',
+            'search'
+        ));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Form tambah pemilih.
      */
     public function create()
     {
-        //
+        return view('admin.voters.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan pemilih baru.
      */
     public function store(Request $request)
-{
-    $data = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'nisn' => 'required|string|unique:users,nisn',
-        'password' => 'required|min:8',
-    ]);
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'nisn' => 'required|string|unique:users,nisn',
+            'password' => 'required|string|min:8',
+        ]);
 
-    User::create([
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'nisn' => $data['nisn'],
-        'password' => Hash::make($data['password']),
-        'role' => 'voter',
-    ]);
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'nisn' => $data['nisn'],
+            'password' => Hash::make($data['password']),
+            'role' => 'voter',
+        ]);
 
-    return redirect()->route('admin.voters.index')
-        ->with('success', 'Pemilih berhasil ditambahkan.');
-}
+        return redirect()->route('admin.voters.index')
+            ->with('success', 'Pemilih berhasil ditambahkan.');
+    }
 
     /**
-     * Display the specified resource.
+     * Detail pemilih.
      */
     public function show(string $id)
     {
-        //
+        $voter = User::where('role', 'voter')->findOrFail($id);
+
+        return view('admin.voters.show', compact('voter'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Form edit pemilih.
      */
     public function edit(string $id)
     {
-        //
+        $voter = User::where('role', 'voter')->findOrFail($id);
+
+        return view('admin.voters.edit', compact('voter'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui data pemilih.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $voter = User::where('role', 'voter')->findOrFail($id);
+
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $voter->id,
+            'nisn' => 'required|string|unique:users,nisn,' . $voter->id,
+        ]);
+
+        $voter->update($data);
+
+        return redirect()->route('admin.voters.index')
+            ->with('success', 'Data pemilih berhasil diperbarui.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus pemilih.
      */
     public function destroy(string $id)
     {
-        //
+        $voter = User::where('role', 'voter')->findOrFail($id);
+
+        $voter->delete();
+
+        return redirect()->route('admin.voters.index')
+            ->with('success', 'Data pemilih berhasil dihapus.');
     }
 }

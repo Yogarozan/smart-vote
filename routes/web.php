@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -9,22 +10,37 @@ use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\VoterController;
 use App\Http\Controllers\VotingController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\ProfileController;
 
-// Halaman login
-Route::middleware('guest')->group(function () {
-    Route::get('/', [AuthController::class, 'showLogin'])
+// Login
+    Route::get('/', [AuthController::class, 'showRegister'])
+        ->name('home');
+    Route::get('/login', [AuthController::class, 'showLogin'])
         ->name('login');
 
     Route::post('/login', [AuthController::class, 'login'])
         ->name('login.process');
-});
 
-// Logout
+    // Registrasi tahap 1
+    Route::get('/register', [AuthController::class, 'showRegister'])
+        ->name('register');
+
+    Route::post('/register', [AuthController::class, 'registerStepOne'])
+        ->name('register.step1');
+
+    // Registrasi tahap 2
+    Route::get('/register/details', [AuthController::class, 'showRegisterDetails'])
+        ->name('register.details');
+
+    Route::post('/register/details', [AuthController::class, 'registerStepTwo'])
+        ->name('register.step2');
+
+// LOGOUT
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-// Admin
+// ADMIN
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->name('admin.')
@@ -43,11 +59,21 @@ Route::middleware(['auth', 'role:admin'])
             ->name('results');
     });
 
-// Pemilih
+// PEMILIH
 Route::middleware(['auth', 'role:voter'])
     ->prefix('voter')
     ->name('voter.')
     ->group(function () {
+
+    // PROFIL USER
+        Route::get('/profile', [ProfileController::class, 'show'])
+            ->name('profile');
+
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])
+            ->name('profile.edit');
+
+        Route::put('/profile', [ProfileController::class, 'update'])
+            ->name('profile.update');
 
         Route::get('/dashboard', [DashboardController::class, 'voter'])
             ->name('dashboard');
@@ -57,4 +83,5 @@ Route::middleware(['auth', 'role:voter'])
 
         Route::post('/vote/{election}', [VotingController::class, 'store'])
             ->name('vote.store');
+
     });
