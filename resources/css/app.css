@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@source "../views/**/*.blade.php";
+@source "../js/**/*.js";
+
+body {
+    background-color: #080f1f;
+    color: #f8fafc;
+    font-family: Arial, sans-serif;
+}
