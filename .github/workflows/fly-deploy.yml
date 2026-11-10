@@ -2,9 +2,6 @@
 name: Deploy SMART VOTE to Fly.io
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
