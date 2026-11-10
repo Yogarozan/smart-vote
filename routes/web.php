@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CandidateController;
@@ -12,28 +13,37 @@ use App\Http\Controllers\VotingController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\ProfileController;
 
-// Login
-    Route::get('/', [AuthController::class, 'showRegister'])
-        ->name('home');
-    Route::get('/login', [AuthController::class, 'showLogin'])
-        ->name('login');
+// HALAMAN PUBLIK
+Route::get('/', [LandingController::class, 'index'])->name('home');
 
-    Route::post('/login', [AuthController::class, 'login'])
-        ->name('login.process');
+Route::get('/tentang', [LandingController::class, 'tentang'])
+    ->name('tentang');
 
-    // Registrasi tahap 1
-    Route::get('/register', [AuthController::class, 'showRegister'])
-        ->name('register');
+Route::get('/keunggulan', [LandingController::class, 'keunggulan'])
+    ->name('keunggulan');
 
-    Route::post('/register', [AuthController::class, 'registerStepOne'])
-        ->name('register.step1');
+Route::get('/panduan', [LandingController::class, 'panduan'])
+    ->name('panduan');
 
-    // Registrasi tahap 2
-    Route::get('/register/details', [AuthController::class, 'showRegisterDetails'])
-        ->name('register.details');
+// LOGIN
+Route::get('/login', [AuthController::class, 'showLogin'])
+    ->name('login');
 
-    Route::post('/register/details', [AuthController::class, 'registerStepTwo'])
-        ->name('register.step2');
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.process');
+
+    // REGISTRASI PEMILIH
+Route::get('register', [AuthController::class, 'showRegister'])
+    ->name('register');
+
+Route::post('/register', [AuthController::class, 'registerStepOne'])
+    ->name('register.step1');
+
+Route::get('/register/details', [AuthController::class, 'showRegisterDetails'])
+    ->name('register.details');
+
+Route::post('/register/details', [AuthController::class, 'registerStepTwo'])
+    ->name('register.step2');
 
 // LOGOUT
 Route::post('/logout', [AuthController::class, 'logout'])

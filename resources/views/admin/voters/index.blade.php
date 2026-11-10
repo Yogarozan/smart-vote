@@ -18,7 +18,7 @@
                 Data Pemilih
             </h2>
             <p class="text-slate-400 mt-2 text-sm">
-                Kelola dan pantau seluruh akun pemilih SMART VOTE.
+                Kelola dan pantau data pemilih berdasarkan asal sekolah.
             </p>
         </div>
 
@@ -47,40 +47,36 @@
     @endif
 
     {{-- STATISTIK --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
 
         <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-slate-400 text-sm">Total Pemilih</p>
-                    <h3 class="text-3xl font-bold text-white mt-3">
-                        {{ number_format($totalVoters) }}
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-2">
-                        Seluruh akun dengan role pemilih
-                    </p>
-                </div>
-                <div class="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-2xl">
-                    👥
-                </div>
-            </div>
+            <p class="text-slate-400 text-sm">Total Pemilih</p>
+            <h3 class="text-3xl font-bold text-white mt-3">
+                {{ number_format($totalVoters) }}
+            </h3>
+            <p class="text-xs text-slate-500 mt-2">
+                Seluruh akun pemilih
+            </p>
         </div>
 
         <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-slate-400 text-sm">Hasil Pencarian</p>
-                    <h3 class="text-3xl font-bold text-white mt-3">
-                        {{ $voters->total() }}
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-2">
-                        Jumlah data sesuai filter
-                    </p>
-                </div>
-                <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-2xl">
-                    🔎
-                </div>
-            </div>
+            <p class="text-slate-400 text-sm">Asal Sekolah</p>
+            <h3 class="text-3xl font-bold text-white mt-3">
+                {{ $schools->count() }}
+            </h3>
+            <p class="text-xs text-slate-500 mt-2">
+                Sekolah yang terdaftar
+            </p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+            <p class="text-slate-400 text-sm">Hasil Filter</p>
+            <h3 class="text-3xl font-bold text-white mt-3">
+                {{ number_format($voters->total()) }}
+            </h3>
+            <p class="text-xs text-slate-500 mt-2">
+                Jumlah pemilih sesuai pencarian
+            </p>
         </div>
 
     </div>
@@ -88,55 +84,94 @@
     {{-- TABEL PEMILIH --}}
     <div class="rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden">
 
+        {{-- HEADER DAN FILTER --}}
         <div class="p-5 md:p-6 border-b border-slate-800">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
-                <div>
-                    <h3 class="text-lg font-bold text-white">
-                        Daftar Seluruh Pemilih
-                    </h3>
-                    <p class="text-sm text-slate-400 mt-1">
-                        Informasi akun yang terdaftar dalam sistem.
-                    </p>
-                </div>
+            <div class="mb-5">
+                <h3 class="text-lg font-bold text-white">
+                    Daftar Seluruh Pemilih
+                </h3>
+                <p class="text-sm text-slate-400 mt-1">
+                    Cari pemilih atau kelompokkan berdasarkan asal sekolah.
+                </p>
+            </div>
 
-                <form method="GET"
-                      action="{{ route('admin.voters.index') }}"
-                      class="flex flex-col sm:flex-row gap-2">
+            <form method="GET"
+                  action="{{ route('admin.voters.index') }}"
+                  class="grid grid-cols-1 md:grid-cols-12 gap-3">
 
+                {{-- PENCARIAN --}}
+                <div class="md:col-span-5">
                     <input
                         type="text"
                         name="search"
                         value="{{ $search }}"
-                        placeholder="Cari nama, email, NISN..."
-                        class="w-full sm:w-72 px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Cari nama, email, NISN, sekolah..."
+                        class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
+                </div>
+
+                {{-- FILTER SEKOLAH --}}
+                <div class="md:col-span-4">
+                    <select
+                        name="school"
+                        onchange="this.form.submit()"
+                        class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                        <option value="">Semua Sekolah</option>
+
+                        @foreach($schools as $schoolOption)
+                            <option value="{{ $schoolOption }}"
+                                {{ $school == $schoolOption ? 'selected' : '' }}>
+                                {{ $schoolOption }}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </div>
+
+                {{-- TOMBOL --}}
+                <div class="md:col-span-3 flex gap-2">
 
                     <button type="submit"
-                            class="px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium transition">
-                        Cari
+                            class="flex-1 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold transition">
+                        Terapkan
                     </button>
 
-                    @if($search)
+                    @if($search || $school)
                         <a href="{{ route('admin.voters.index') }}"
-                           class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-center transition">
+                           class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
                             Reset
                         </a>
                     @endif
-                </form>
 
-            </div>
+                </div>
+
+            </form>
+
+            {{-- FILTER AKTIF --}}
+            @if($school)
+                <div class="mt-4 flex items-center gap-2 text-sm">
+                    <span class="text-slate-400">Filter sekolah:</span>
+                    <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                        {{ $school }}
+                    </span>
+                </div>
+            @endif
+
         </div>
 
+        {{-- TABEL --}}
         <div class="overflow-x-auto">
 
-            <table class="w-full min-w-[850px] text-left">
+            <table class="w-full min-w-[1050px] text-left">
 
                 <thead class="bg-slate-800/70 text-slate-400 text-xs uppercase tracking-wider">
                     <tr>
                         <th class="px-6 py-4">No.</th>
                         <th class="px-6 py-4">Nama Pemilih</th>
                         <th class="px-6 py-4">NISN</th>
+                        <th class="px-6 py-4">Asal Sekolah</th>
                         <th class="px-6 py-4">Email</th>
                         <th class="px-6 py-4">Status</th>
                         <th class="px-6 py-4 text-center">Aksi</th>
@@ -172,6 +207,10 @@
 
                             <td class="px-6 py-5 text-slate-300 text-sm">
                                 {{ $voter->nisn ?? '-' }}
+                            </td>
+
+                            <td class="px-6 py-5 text-slate-300 text-sm">
+                                {{ $voter->voterProfile?->school ?? '-' }}
                             </td>
 
                             <td class="px-6 py-5 text-slate-300 text-sm">
@@ -218,14 +257,16 @@
                     @empty
 
                         <tr>
-                            <td colspan="6" class="px-6 py-16 text-center">
+                            <td colspan="7" class="px-6 py-16 text-center">
                                 <div class="text-4xl mb-4">👥</div>
+
                                 <h4 class="text-white font-semibold">
-                                    Belum Ada Data Pemilih
+                                    Data Pemilih Tidak Ditemukan
                                 </h4>
+
                                 <p class="text-slate-400 text-sm mt-2">
-                                    @if($search)
-                                        Tidak ditemukan pemilih dengan kata kunci "{{ $search }}".
+                                    @if($search || $school)
+                                        Tidak ada pemilih yang sesuai dengan pencarian atau filter sekolah.
                                     @else
                                         Belum ada akun pemilih yang terdaftar dalam sistem.
                                     @endif

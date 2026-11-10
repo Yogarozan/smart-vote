@@ -29,9 +29,17 @@
         <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5">
 
             @if($candidate->photo)
-                <img src="{{ asset('storage/'.$candidate->photo) }}"
-                     class="w-full h-56 object-cover rounded-xl mb-4">
-            @endif
+    <div class="w-full h-[360px] flex items-center justify-center bg-slate-800 rounded-xl mb-4 overflow-hidden p-2">
+
+        <img
+            src="{{ asset('storage/'.$candidate->photo) }}"
+            alt="Foto kandidat {{ $candidate->name }}"
+            class="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
+            loading="lazy"
+        >
+
+    </div>
+@endif
 
             <h2 class="text-xl font-bold">
                 {{ $candidate->name }}
