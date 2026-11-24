@@ -67,6 +67,12 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::get('/results', [ResultController::class, 'index'])
             ->name('results');
+
+        Route::get('/results/pdf', [ResultController::class, 'exportPdf'])
+            ->name('results.pdf');
+
+        Route::get('/results/excel', [ResultController::class, 'exportExcel'])
+            ->name('results.excel');
     });
 
 // PEMILIH

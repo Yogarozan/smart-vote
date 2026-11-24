@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akun | SMART VOTE</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/smartvote-icon.svg') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -62,9 +63,9 @@
 
 <body class="main-bg min-h-screen text-white">
 
-    <div class="min-h-screen flex items-center justify-center p-4 lg:p-8">
+    <div class="min-h-screen flex items-center justify-center px-3 py-5 sm:p-6 lg:p-8">
 
-        <div class="w-full max-w-6xl grid lg:grid-cols-2 overflow-hidden rounded-[28px] border border-white/10 shadow-2xl">
+        <div class="w-full max-w-6xl grid lg:grid-cols-2 overflow-hidden rounded-2xl sm:rounded-[28px] border border-white/10 shadow-2xl">
 
             <!-- LEFT SIDE -->
             <div class="hidden lg:flex flex-col justify-between p-12 relative overflow-hidden bg-gradient-to-br from-blue-950 via-slate-900 to-slate-950">
@@ -73,19 +74,20 @@
                 <div class="absolute w-72 h-72 bg-sky-500/10 rounded-full blur-3xl bottom-0 right-0"></div>
 
                 <!-- BRAND -->
-                <div class="relative z-10 flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
-                        <svg class="w-7 h-7" fill="none" stroke="white" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m5-1a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
+            <div class="relative z-10 flex items-center gap-3">
+            <div class="w-14 h-14 rounded-2xl bg-white
+                border border-white/80 shadow-lg
+                flex items-center justify-center p-2">
+                <img src="{{ asset('images/smartvote-icon.svg') }}"
+             alt="Logo SMART VOTE"
+             class="w-full h-full object-contain">
+            </div>
 
-                    <div>
-                        <h1 class="font-extrabold text-xl tracking-wide">SMART VOTE</h1>
-                        <p class="text-xs text-blue-300 tracking-widest">DIGITAL VOTING PLATFORM</p>
-                    </div>
-                </div>
+    <div>
+        <h1 class="font-extrabold text-xl tracking-wide">SMART VOTE</h1>
+        <p class="text-xs text-blue-300 tracking-widest">DIGITAL VOTING PLATFORM</p>
+    </div>
+    </div>
 
                 <!-- HERO TEXT -->
                 <div class="relative z-10 mt-12">
@@ -173,23 +175,25 @@
             </div>
 
             <!-- RIGHT SIDE FORM -->
-            <div class="bg-white text-slate-900 p-7 sm:p-10 lg:p-12 flex flex-col justify-center">
+            <div class="bg-white text-slate-900 p-5 sm:p-8 lg:p-12 flex flex-col justify-center">
 
                 <div class="max-w-md w-full mx-auto">
 
                     <!-- MOBILE BRAND -->
-                    <div class="lg:hidden flex items-center gap-3 mb-10">
-                        <div class="w-11 h-11 bg-blue-600 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m5-1a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h1 class="font-extrabold text-xl">SMART VOTE</h1>
-                            <p class="text-xs text-slate-500">DIGITAL VOTING PLATFORM</p>
-                        </div>
-                    </div>
+<div class="lg:hidden flex items-center gap-3 mb-10">
+    <div class="w-12 h-12 rounded-xl bg-white
+                border border-slate-200 shadow-md
+                flex items-center justify-center p-1.5">
+        <img src="{{ asset('images/smartvote-icon.svg') }}"
+             alt="Logo SMART VOTE"
+             class="w-full h-full object-contain">
+    </div>
+
+    <div>
+        <h1 class="font-extrabold text-xl">SMART VOTE</h1>
+        <p class="text-xs text-slate-500">DIGITAL VOTING PLATFORM</p>
+    </div>
+</div>
 
                     <!-- HEADING -->
                     <div class="mb-8">

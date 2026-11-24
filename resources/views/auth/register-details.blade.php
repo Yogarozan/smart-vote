@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Pribadi - SMART VOTE</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/smartvote-icon.svg') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-slate-950 flex items-center justify-center p-5">
@@ -12,9 +13,25 @@
     <div class="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl p-8 text-white">
 
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-blue-400">SMART VOTE</h1>
-            <p class="text-slate-400 mt-2">Lengkapi identitas diri untuk melanjutkan</p>
-        </div>
+
+    <div class="w-20 h-20 mx-auto mb-4 rounded-2xl
+                bg-white border border-white/80
+                shadow-xl shadow-blue-500/10
+                flex items-center justify-center p-3">
+        <img src="{{ asset('images/smartvote-icon.svg') }}"
+             alt="Logo SMART VOTE"
+             class="w-full h-full object-contain">
+    </div>
+
+    <h1 class="text-2xl font-extrabold text-blue-400">
+        SMART VOTE
+    </h1>
+
+    <p class="text-slate-400 mt-2">
+        Lengkapi identitas diri untuk melanjutkan
+    </p>
+
+</div>
 
         <div class="flex gap-2 mb-8">
             <div class="h-1.5 flex-1 bg-blue-500 rounded-full"></div>

@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="mx-auto max-w-7xl space-y-8">
+<div class="mx-auto w-full max-w-7xl space-y-6 px-1 sm:space-y-8 sm:px-0">
 
     {{-- WELCOME SECTION --}}
     <section class="relative overflow-hidden rounded-3xl border border-blue-400/20 bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-950 p-6 shadow-2xl shadow-blue-950/20 sm:p-8">
@@ -22,7 +22,7 @@
                     ADMINISTRATOR WORKSPACE
                 </span>
 
-                <h1 class="mt-5 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+                <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                     Selamat Datang,
                     <span class="text-blue-200">
                         {{ auth()->user()->name }}!
@@ -80,7 +80,7 @@
                 <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-400">
                     System Overview
                 </p>
-                <h2 class="mt-2 text-2xl font-extrabold text-white">
+                <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                     Ringkasan Sistem
                 </h2>
                 <p class="mt-1 text-sm text-slate-400">
@@ -104,7 +104,7 @@
                         <p class="text-sm font-medium text-slate-400">
                             Total Pemilih
                         </p>
-                        <h3 class="mt-3 text-4xl font-extrabold tracking-tight text-white">
+                        <h3 class="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                             {{ number_format($totalVoters, 0, ',', '.') }}
                         </h3>
                         <p class="mt-2 text-xs text-slate-500">

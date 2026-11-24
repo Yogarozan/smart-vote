@@ -1,10 +1,245 @@
+
 @import "tailwindcss";
 
 @source "../views/**/*.blade.php";
 @source "../js/**/*.js";
 
+/* =========================================
+   GLOBAL STYLE
+========================================= */
+
+:root {
+    color-scheme: dark;
+    --primary: #2563eb;
+    --secondary: #6366f1;
+    --accent: #38bdf8;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
 body {
-    background-color: #080f1f;
+    background:
+        radial-gradient(ellipse at 15% 10%, rgba(37, 99, 235, 0.12), transparent 35%),
+        radial-gradient(ellipse at 85% 35%, rgba(99, 102, 241, 0.10), transparent 35%),
+        #080f1f;
     color: #f8fafc;
     font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   GRADIENT TEXT
+========================================= */
+
+.gradient-text {
+    background: linear-gradient(
+        90deg,
+        #60a5fa,
+        #818cf8,
+        #38bdf8,
+        #60a5fa
+    );
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 6s linear infinite;
+}
+
+/* =========================================
+   FLOATING ANIMATION
+========================================= */
+
+.float-slow {
+    animation: floating 6s ease-in-out infinite;
+}
+
+.float-delayed {
+    animation: floating 7s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-16px);
+    }
+}
+
+/* =========================================
+   GLOWING BACKGROUND
+========================================= */
+
+.glow-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    pointer-events: none;
+    animation: orbMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes orbMove {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(30px, -25px) scale(1.15);
+    }
+}
+
+/* =========================================
+   GLASSMORPHISM
+========================================= */
+
+.glass-panel {
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================
+   CARD HOVER EFFECT
+========================================= */
+
+.card-hover {
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-8px);
+    border-color: rgba(59, 130, 246, 0.65);
+    box-shadow: 0 20px 45px rgba(37, 99, 235, 0.13);
+}
+
+/* =========================================
+   BUTTON GLOW
+========================================= */
+
+.btn-glow {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: all 0.3s ease;
+}
+
+.btn-glow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+}
+
+.btn-glow::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: left 0.7s ease;
+    z-index: -1;
+}
+
+.btn-glow:hover::before {
+    left: 150%;
+}
+
+/* =========================================
+   FADE UP ANIMATION
+========================================= */
+
+.animate-fade-up {
+    animation: fadeUp 0.9s ease both;
+}
+
+.animate-fade-up-delay {
+    animation: fadeUp 0.9s ease 0.2s both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   GRADIENT ANIMATION
+========================================= */
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 300% center;
+    }
+}
+
+/* =========================================
+   PULSE GLOW
+========================================= */
+
+.pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+    }
+
+    50% {
+        box-shadow: 0 0 35px rgba(59, 130, 246, 0.4);
+    }
+}
+
+/* =========================================
+   BACKGROUND GRID
+========================================= */
+
+.grid-pattern {
+    background-image:
+        linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+    background-size: 45px 45px;
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
